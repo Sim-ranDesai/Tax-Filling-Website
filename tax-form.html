@@ -1,0 +1,33 @@
+<div class="container mt-4">
+    <h3>File Your Tax Return</h3>
+    <form id="taxForm" onsubmit="return submitTaxForm(event)">
+        <div class="mb-3">
+            <label class="form-label">Income ($)</label>
+            <input type="number" class="form-control" required>
+        </div>
+        
+        <div class="mb-3">
+            <label class="form-label">Deductions ($)</label>
+            <input type="number" class="form-control" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<script>
+    function submitTaxForm(e) {
+        e.preventDefault();
+        const taxData = JSON.parse(localStorage.getItem('tax_data') || []);
+        
+        taxData.push({
+            income: e.target[0].value,
+            deductions: e.target[1].value,
+            date: new Date().toISOString()
+        });
+
+        localStorage.setItem('tax_data', JSON.stringify(taxData));
+        alert('Tax return submitted successfully!');
+        window.location.href = 'dashboard.html';
+    }
+</script>

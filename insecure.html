@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Insecure Site (HTTP)</title>
+    <style>
+        body { font-family: Arial; max-width: 600px; margin: 20px auto; padding: 20px; }
+        .vuln-section { border: 2px solid red; padding: 15px; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <h1>🔓 Insecure Tax Portal (HTTP)</h1>
+
+    <!-- Simulated SQL Injection -->
+    <div class="vuln-section">
+        <h2>1. Login (SQL Injection Demo)</h2>
+        <input id="username" placeholder="Username">
+        <input id="password" placeholder="Password">
+        <button onclick="login()">Login</button>
+        <p id="login-result"></p>
+    </div>
+
+    <!-- Simulated XSS -->
+    <div class="vuln-section">
+        <h2>2. Post Comment (XSS Demo)</h2>
+        <input id="comment" placeholder="Comment">
+        <button onclick="postComment()">Post</button>
+        <div id="comments"></div>
+    </div>
+
+    <script>
+        // Simulated "database"
+        let users = [
+            { username: "admin", password: "admin123" }
+        ];
+
+        // VULNERABLE LOGIN (SQLi simulation)
+        function login() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            
+            // Vulnerable "query"
+            const user = users.find(u => 
+                u.username === username && 
+                u.password === password
+            );
+
+            // SQLi Attack: Try username = ' OR 1=1 --
+            document.getElementById("login-result").innerHTML = user ? 
+                `Logged in as: ${user.username}` : 
+                "Login failed!";
+        }
+
+        // VULNERABLE COMMENT (XSS)
+        function postComment() {
+            const comment = document.getElementById("comment").value;
+            document.getElementById("comments").innerHTML += `
+                <div class="comment">${comment}</div>
+            `;
+        }
+    </script>
+</body>
+</html>

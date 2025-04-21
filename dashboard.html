@@ -1,0 +1,36 @@
+<div class="container mt-4">
+    <h3>Welcome, <span id="username"></span></h3>
+    <div class="row mt-4">
+        <!-- Tax Summary Card -->
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Filed Returns</h5>
+                    <p class="card-text" id="filedReturns">0</p>
+                    <a href="tax-form.html" class="btn btn-primary">File New Return</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Card -->
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Pending Payments</h5>
+                    <p class="card-text" id="pendingPayments">$0.00</p>
+                    <a href="payment.html" class="btn btn-success">Make Payment</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Load user data
+    const user = JSON.parse(localStorage.getItem('current_user'));
+    document.getElementById('username').textContent = user.name;
+
+    // Load tax data (simulated)
+    const taxData = JSON.parse(localStorage.getItem('tax_data') || []);
+    document.getElementById('filedReturns').textContent = taxData.length;
+</script>
